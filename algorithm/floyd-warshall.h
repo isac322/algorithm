@@ -4,7 +4,7 @@
 #include <algorithm>
 
 namespace FloydWarshall {
-	const int &INF = std::numeric_limits<int>::max() >> 1;
+	const int &INF = std::numeric_limits<int>::max();
 
 	/*
 	Graph
@@ -26,7 +26,9 @@ namespace FloydWarshall {
 		for (size_t k = 0; k < n; k++) {
 			for (size_t i = 0; i < n; i++) {
 				for (size_t j = 0; j < n; j++) {
-					dist[i][j] = std::min(dist[i][j], dist[i][k] + dist[k][j]);
+					if (dist[i][k] != INF && dist[k][j] != INF) {
+						dist[i][j] = std::min(dist[i][j], dist[i][k] + dist[k][j]);
+					}
 				}
 			}
 		}
