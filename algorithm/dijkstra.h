@@ -10,12 +10,15 @@ namespace dijkstra {
 	const int &INF = std::numeric_limits<int>::max();
 
 	/*
-	graph
+	Graph
 	pair.first : weight
 	pair.second : destination node
 	*/
 	std::vector<std::vector<PAIR> > G;
 
+	/*
+	shortest distance from start node
+	*/
 	std::vector<int> dist;
 
 	std::vector<int>& dijkstra(int start, int end, bool allPath = false) {

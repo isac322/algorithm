@@ -10,7 +10,7 @@ namespace prim {
 	const int &INF = std::numeric_limits<int>::max();
 
 	/*
-	graph
+	Graph
 	pair.first : weight
 	pair.second : destination node
 	*/

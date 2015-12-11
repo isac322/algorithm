@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <string>
 
-namespace BM {
+namespace BoyerMoore {
 	std::unordered_map<char, int> map;
 
 	void initMap(const std::string &pattern) {
