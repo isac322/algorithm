@@ -8,20 +8,26 @@ namespace FloydWarshall {
 
 	/*
 	Graph
+	G[i][j] : (i)->(j) edge weight
+	if not exist INF
 	*/
 	std::vector<std::vector<int> > G;
 
 	/*
 	shortest distance
-	dist[i][j] : path, from (i) node to (j) node
+	dist[i][j] : (i) node to (j) node
 	*/
 	std::vector<std::vector<int> > dist;
+
+	void init(int n) {
+		G.resize(n, std::vector<int>(n, INF));
+		for (size_t i = 0; i < n; i++) G[i][i] = 0;
+	}
 
 	std::vector<std::vector<int> >& floyd_warshall() {
 		const size_t &n = G.size();
 
 		dist = G;
-		for (size_t i = 0; i < n; i++) dist[i][i] = 0;
 
 		for (size_t k = 0; k < n; k++) {
 			for (size_t i = 0; i < n; i++) {
