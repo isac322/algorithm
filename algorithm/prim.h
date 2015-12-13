@@ -42,7 +42,7 @@ namespace prim {
 			int here = t.second;
 			const int &prev = dist[here].second;
 
-			if (t.first != -1) {
+			if (here != 0) {
 				if (selected[here]) continue;
 
 				MST[prev].push_back(std::make_pair(dist[here].first, here));
