@@ -39,28 +39,29 @@ namespace prim {
 			PAIR t = que.top();
 			que.pop();
 
-			int here = t.second;
-			const int &prev = dist[here].second;
-
-			if (here != 0) {
-				if (selected[here]) continue;
+			const int &here = t.second;
+			
+			if (!selected[here]) {
+				const int &prev = dist[here].second;
 
 				MST[prev].push_back(std::make_pair(dist[here].first, here));
 				MST[here].push_back(std::make_pair(dist[here].first, prev));
 
 				selected[here] = true;
 				cnt--;
-			}
 
-			for (std::vector<PAIR>::iterator i = G[here].begin(); i != G[here].end(); i++) {
-				const int &there = i->second;
-				const int &weight = i->first;
 
-				if (!selected[there] && dist[there].first > weight) {
-					dist[there].first = weight;
-					dist[there].second = here;
+				for (std::vector<PAIR>::iterator i = G[here].begin(); i != G[here].end(); i++) {
+					const int &there = i->second;
+					const int &weight = i->first;
+					int &w = dist[there].first;
 
-					que.push(std::make_pair(weight, there));
+					if (!selected[there] && w > weight) {
+						w = weight;
+						dist[there].second = here;
+
+						que.push(std::make_pair(weight, there));
+					}
 				}
 			}
 		}
