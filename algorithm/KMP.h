@@ -3,10 +3,11 @@
 #include <vector>
 
 namespace KMP {
-	std::vector<int> failure;
+	std::vector<size_t> failure;
+	std::vector<size_t> mached;
 
-	int genFailure(const std::string &pattern, int index) {
-		int &p = failure[index];
+	size_t genFailure(const std::string &pattern, size_t index) {
+		size_t &p = failure[index];
 		if (p != -1) return p;
 
 		// p = f(i - 1)
@@ -59,6 +60,42 @@ namespace KMP {
 
 		if (index == last) return len - last;
 		else return -1;
+	}
+
+	std::vector<size_t>& KMP_all(const std::string &target, const std::string &pattern) {
+		initFailure(pattern);
+		mached.clear();
+
+		const size_t &len = target.size(), &last = pattern.size();
+		size_t index = 0;
+
+		for (size_t i = 0; i < len; i++) {
+			if (index == last) {
+				mached.push_back(i - last);
+
+				if (failure[index - 1] == 0) {
+					index = 0;
+				}
+				else {
+					index = failure[index - 1];
+				}
+				i--;
+			}
+			else if (target[i] == pattern[index]) index++;
+			else if (index != 0) {
+				if (failure[index - 1] == 0) {
+					index = 0;
+				}
+				else {
+					index = failure[index - 1] - 1;
+				}
+				i--;
+			}
+		}
+
+		if (index == last) mached.push_back(len - last);
+
+		return mached;
 	}
 }
 
