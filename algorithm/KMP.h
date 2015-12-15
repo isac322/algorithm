@@ -1,14 +1,17 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <limits>
 
 namespace KMP {
+	const size_t &INF = std::numeric_limits<size_t>::max();
+
 	std::vector<size_t> failure;
 	std::vector<size_t> mached;
 
 	size_t genFailure(const std::string &pattern, size_t index) {
 		size_t &p = failure[index];
-		if (p != -1) return p;
+		if (p != INF) return p;
 
 		// p = f(i - 1)
 		p = genFailure(pattern, index - 1);
@@ -30,7 +33,7 @@ namespace KMP {
 	void initFailure(const std::string &pattern) {
 		const size_t &len = pattern.size();
 
-		failure.resize(len, -1);
+		failure.resize(len, INF);
 
 		failure[0] = 0;
 
