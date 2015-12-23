@@ -32,8 +32,9 @@ namespace KMP {
 
 	void initFailure(const std::string &pattern) {
 		const size_t &len = pattern.size();
-
-		failure.resize(len, INF);
+		
+		failure.resize(len);
+		fill(failure.begin(), failure.end(), INF);
 
 		failure[0] = 0;
 
@@ -74,7 +75,7 @@ namespace KMP {
 
 		for (size_t i = 0; i < len; i++) {
 			if (index == last) {
-				mached.push_back(i - last);
+				mached.emplace_back(i - last);
 
 				if (failure[index - 1] == 0) {
 					index = 0;
@@ -96,7 +97,7 @@ namespace KMP {
 			}
 		}
 
-		if (index == last) mached.push_back(len - last);
+		if (index == last) mached.emplace_back(len - last);
 
 		return mached;
 	}
