@@ -29,9 +29,9 @@ namespace BellmanFord {
 		for (size_t i = 0; i < n - 1; i++) {
 			for (size_t here = 0; here < n; here++) {
 				if (dist[here] != INF) {
-					for (std::vector<PAIR>::iterator j = G[here].begin(); j != G[here].end(); j++) {
-						const int &there = j->second;
-						const int &weight = j->first;
+					for (auto &j : G[here]) {
+						const int &there = j.second;
+						const int &weight = j.first;
 
 						dist[there] = std::min(dist[there], dist[here] + weight);
 					}
@@ -51,9 +51,9 @@ namespace BellmanFord {
 
 		for (size_t here = 0; here < n; here++) {
 			if (dist[here] != INF) {
-				for (std::vector<PAIR>::iterator j = G[here].begin(); j != G[here].end(); j++) {
-					const int &there = j->second;
-					const int &weight = j->first;
+				for (auto &j : G[here]) {
+					const int &there = j.second;
+					const int &weight = j.first;
 
 					if (dist[there] > dist[here] + weight) {
 						return true;

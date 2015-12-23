@@ -29,11 +29,13 @@ namespace prim {
 		selected.resize(n, false);
 		dist.resize(n, std::make_pair(INF, 0));
 
+
 		std::priority_queue<PAIR, std::vector<PAIR>, std::greater<PAIR> > que;
 
 		dist[0] = std::make_pair(0, 0);
 		selected[0] = true;
 		que.emplace(-1, 0);
+
 
 		while (cnt != 0) {
 			PAIR t = que.top();
@@ -53,9 +55,9 @@ namespace prim {
 			}
 
 
-			for (std::vector<PAIR>::iterator i = G[here].begin(); i != G[here].end(); i++) {
-				const int &there = i->second;
-				const int &weight = i->first;
+			for (auto &i : G[here]) {
+				const int &there = i.second;
+				const int &weight = i.first;
 				int &w = dist[there].first;
 
 				if (!selected[there] && w > weight) {
