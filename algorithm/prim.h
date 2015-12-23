@@ -33,35 +33,36 @@ namespace prim {
 
 		dist[0] = std::make_pair(0, 0);
 		selected[0] = true;
-		que.push(std::make_pair(-1, 0));
+		que.emplace(-1, 0);
 
 		while (cnt != 0) {
 			PAIR t = que.top();
 			que.pop();
 
 			const int &here = t.second;
-			
-			if (!selected[here]) {
+
+			if (here != 0) {
+				if (selected[here]) continue;
 				const int &prev = dist[here].second;
 
-				MST[prev].push_back(std::make_pair(dist[here].first, here));
-				MST[here].push_back(std::make_pair(dist[here].first, prev));
+				MST[prev].emplace_back(dist[here].first, here);
+				MST[here].emplace_back(dist[here].first, prev);
 
 				selected[here] = true;
 				cnt--;
+			}
 
 
-				for (std::vector<PAIR>::iterator i = G[here].begin(); i != G[here].end(); i++) {
-					const int &there = i->second;
-					const int &weight = i->first;
-					int &w = dist[there].first;
+			for (std::vector<PAIR>::iterator i = G[here].begin(); i != G[here].end(); i++) {
+				const int &there = i->second;
+				const int &weight = i->first;
+				int &w = dist[there].first;
 
-					if (!selected[there] && w > weight) {
-						w = weight;
-						dist[there].second = here;
+				if (!selected[there] && w > weight) {
+					w = weight;
+					dist[there].second = here;
 
-						que.push(std::make_pair(weight, there));
-					}
+					que.emplace(weight, there);
 				}
 			}
 		}
