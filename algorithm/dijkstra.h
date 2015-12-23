@@ -28,7 +28,7 @@ namespace dijkstra {
 		std::priority_queue<PAIR, std::vector<PAIR>, std::greater<PAIR> > que;
 
 		dist[start] = 0;
-		que.push(std::make_pair(0, start));
+		que.emplace(0, start);
 
 		while (!que.empty()) {
 			PAIR t = que.top();
@@ -39,14 +39,14 @@ namespace dijkstra {
 
 			if (here == end && !allPath) break;
 
-			for (std::vector<PAIR>::iterator i = G[here].begin(); i != G[here].end(); i++) {
-				const int &there = i->second;
-				const int &weight = i->first;
+			for (auto &i : G[here]) {
+				const int &there = i.second;
+				const int &weight = i.first;
 
 				if (dist[there] > d + weight) {
 					dist[there] = d + weight;
 
-					que.push(std::make_pair(dist[there], there));
+					que.emplace(dist[there], there);
 				}
 			}
 		}
