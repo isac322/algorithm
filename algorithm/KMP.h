@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include <vector>
 #include <limits>
@@ -10,14 +11,14 @@ namespace KMP {
 	std::vector<size_t> mached;
 
 	size_t genFailure(const std::string &pattern, size_t index) {
-		size_t &p = failure[index];
+		if (index == 0) return 0;
+		size_t &p = failure[index - 1];
 		if (p != INF) return p;
 
 		// p = f(i - 1)
 		p = genFailure(pattern, index - 1);
-		const char &target = pattern[index];
 
-		while (pattern[p] != target) {
+		while (pattern[p] != pattern[index - 1]) {
 			// 더이상 매칭 불가능
 			if (p == 0) {
 				return p = 0;
@@ -32,41 +33,38 @@ namespace KMP {
 
 	void initFailure(const std::string &pattern) {
 		const size_t &len = pattern.size();
-		
+
 		failure.resize(len);
 		fill(failure.begin(), failure.end(), INF);
 
 		failure[0] = 0;
 
-		genFailure(pattern, len - 1);
+		genFailure(pattern, len);
 	}
 
-	int KMP(const std::string &target, const std::string &pattern) {
+	size_t KMP(const std::string &target, const std::string &pattern) {
 		initFailure(pattern);
 
 		const size_t &len = target.size(), &last = pattern.size();
 		size_t index = 0;
 
 		for (size_t i = 0; i < len; i++) {
-			// 찾음
-			if (index == last) return i - last;
-			else if (target[i] == pattern[index]) index++;
+			if (target[i] == pattern[index]) {
+				index++;
+
+				if (index == last) return i - last + 1;
+			}
 			else if (index != 0) {
-				if (failure[index - 1] == 0) {
-					index = 0;
-				}
-				else {
-					index = failure[index - 1] - 1;
-				}
+				index = failure[index - 1];
+
 				i--;
 			}
 		}
 
-		if (index == last) return len - last;
-		else return -1;
+		return len;
 	}
 
-	std::vector<size_t>& KMP_all(const std::string &target, const std::string &pattern) {
+	std::vector<size_t> &KMP_all(const std::string &target, const std::string &pattern) {
 		initFailure(pattern);
 		mached.clear();
 
@@ -74,30 +72,21 @@ namespace KMP {
 		size_t index = 0;
 
 		for (size_t i = 0; i < len; i++) {
-			if (index == last) {
-				mached.emplace_back(i - last);
+			if (target[i] == pattern[index]) {
+				index++;
 
-				if (failure[index - 1] == 0) {
-					index = 0;
+				if (index == last) {
+					mached.emplace_back(i - index + 1);
+
+					index = failure.back();
 				}
-				else {
-					index = failure[index - 1];
-				}
-				i--;
 			}
-			else if (target[i] == pattern[index]) index++;
 			else if (index != 0) {
-				if (failure[index - 1] == 0) {
-					index = 0;
-				}
-				else {
-					index = failure[index - 1] - 1;
-				}
+				index = failure[index - 1];
+
 				i--;
 			}
 		}
-
-		if (index == last) mached.emplace_back(len - last);
 
 		return mached;
 	}
