@@ -7,18 +7,18 @@
 namespace ConvexHull {
 	struct Point {
 		int x, y;
-		double angleInSin = 0.0;
+		double angle = 0.0;
 
 		bool operator<(const Point &val) const {
-			if (angleInSin == val.angleInSin) return x < val.x;
-			else return angleInSin < val.angleInSin;
+			if (angle == val.angle) return x < val.x;
+			else return angle < val.angle;
 		}
 
 		Point() { }
 
 		Point(int x, int y) : x(x), y(y) { }
 
-		Point(const Point &val) : x(val.x), y(val.y), angleInSin(val.angleInSin) { }
+		Point(const Point &val) : x(val.x), y(val.y), angle(val.angle) { }
 	};
 
 	std::vector<Point> points;
@@ -26,7 +26,7 @@ namespace ConvexHull {
 
 	inline void gen_angle(const Point &base) {
 		for (auto &p : points) {
-			p.angleInSin = atan2(p.y - base.y, p.x - base.x) * 180 / M_PI;
+			p.angle = atan2(p.y - base.y, p.x - base.x) * 180 / M_PI;
 		}
 	}
 
