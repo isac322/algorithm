@@ -2,9 +2,10 @@
 
 #include <vector>
 #include <algorithm>
-#include <cmath>
 
 namespace ConvexHull {
+	const double &PI = 3.14159265358979323846;
+
 	struct Point {
 		int x, y;
 		double angle = 0.0;
@@ -26,7 +27,7 @@ namespace ConvexHull {
 
 	inline void gen_angle(const Point &base) {
 		for (auto &p : points) {
-			p.angle = atan2(p.y - base.y, p.x - base.x) * 180 / M_PI;
+			p.angle = atan2(p.y - base.y, p.x - base.x) * 180 / PI;
 		}
 	}
 
