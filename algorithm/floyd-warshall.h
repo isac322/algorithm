@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 #include <limits>
 #include <algorithm>
@@ -24,7 +25,7 @@ namespace FloydWarshall {
 		for (size_t i = 0; i < n; i++) G[i][i] = 0;
 	}
 
-	std::vector<std::vector<int> >& floyd_warshall() {
+	std::vector<std::vector<int> > &floyd_warshall() {
 		const size_t &n = G.size();
 
 		dist = G;

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 #include <limits>
 #include <algorithm>
@@ -20,7 +21,7 @@ namespace BellmanFord {
 	*/
 	std::vector<int> dist;
 
-	std::vector<int>& bellman_ford(int start) {
+	std::vector<int> &bellman_ford(int start) {
 		const size_t &n = G.size();
 
 		dist.resize(n, INF);

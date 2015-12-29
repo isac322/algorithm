@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 #include <functional>
 #include <queue>
@@ -21,7 +22,7 @@ namespace dijkstra {
 	*/
 	std::vector<int> dist;
 
-	std::vector<int>& dijkstra(int start, int end, bool allPath = false) {
+	std::vector<int> &dijkstra(int start, int end, bool allPath = false) {
 		const size_t &n = G.size();
 
 		dist.resize(n, INF);

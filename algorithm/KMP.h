@@ -8,7 +8,7 @@ namespace KMP {
 	const size_t &INF = std::numeric_limits<size_t>::max();
 
 	std::vector<size_t> failure;
-	std::vector<size_t> mached;
+	std::vector<size_t> matched;
 
 	size_t genFailure(const std::string &pattern, size_t index) {
 		if (index == 0) return 0;
@@ -66,7 +66,7 @@ namespace KMP {
 
 	std::vector<size_t> &KMP_all(const std::string &target, const std::string &pattern) {
 		initFailure(pattern);
-		mached.clear();
+		matched.clear();
 
 		const size_t &len = target.size(), &last = pattern.size();
 		size_t index = 0;
@@ -76,7 +76,7 @@ namespace KMP {
 				index++;
 
 				if (index == last) {
-					mached.emplace_back(i - index + 1);
+					matched.emplace_back(i - index + 1);
 
 					index = failure.back();
 				}
@@ -88,7 +88,7 @@ namespace KMP {
 			}
 		}
 
-		return mached;
+		return matched;
 	}
 }
 

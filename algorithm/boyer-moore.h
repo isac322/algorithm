@@ -1,11 +1,12 @@
 #pragma once
+
 #include <unordered_map>
 #include <string>
 #include <vector>
 
 namespace BoyerMoore {
 	std::unordered_map<char, size_t> map;
-	std::vector<size_t> mached;
+	std::vector<size_t> matched;
 
 	void init_map(const std::string &pattern) {
 		map.clear();
@@ -15,7 +16,7 @@ namespace BoyerMoore {
 		}
 	}
 	
-	int boyer_moore(const std::string &target, const std::string &pattern) {
+	size_t boyer_moore(const std::string &target, const std::string &pattern) {
 		init_map(pattern);
 
 		const size_t &t_len = target.size(), &p_len = pattern.size();
@@ -37,7 +38,7 @@ namespace BoyerMoore {
 				return index - p_len;
 			}
 			else if (index >= t_len) {
-				return -1;
+				return t_len;
 			}
 			else {
 				index += p_len - map[target[index]];
@@ -45,9 +46,9 @@ namespace BoyerMoore {
 		}
 	}
 
-	std::vector<size_t>& boyer_moore_all(const std::string &target, const std::string &pattern) {
+	std::vector<size_t> &boyer_moore_all(const std::string &target, const std::string &pattern) {
 		init_map(pattern);
-		mached.clear();
+		matched.clear();
 
 		const size_t &t_len = target.size(), &p_len = pattern.size();
 		size_t index = p_len;
@@ -65,12 +66,12 @@ namespace BoyerMoore {
 			}
 
 			if (check) {
-				mached.push_back(index - p_len);
+				matched.push_back(index - p_len);
 
 				index += p_len - map[target[index]];
 			}
 			else if (index >= t_len) {
-				return mached;
+				return matched;
 			}
 			else {
 				index += p_len - map[target[index]];

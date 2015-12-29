@@ -79,15 +79,19 @@ namespace AhoCorasick {
 		}
 	}
 
-	std::vector<std::pair<size_t, size_t>> mached;
+	/**
+	first : target position
+	second : matched pattern index in pattern[]
+	*/
+	std::vector<std::pair<size_t, size_t>> matched;
 
 	/**
 	return value (pair<size_t, size_t>) :
 	first : target position
-	second : mached pattern index
+	second : matched pattern index
 	*/
 	std::vector<std::pair<size_t, size_t>> &search() {
-		mached.clear();
+		matched.clear();
 
 		auto *p = &Node::root;
 
@@ -100,15 +104,15 @@ namespace AhoCorasick {
 			if (p->next.find(c) != p->next.end()) {
 				p = p->next.find(c)->second;
 
-				if (p->last) mached.emplace_back(i - patterns[p->index].size(), p->index);
+				if (p->last) matched.emplace_back(i - patterns[p->index].size(), p->index);
 				auto *tmp = p->output;
 				while (tmp != nullptr && (tmp->last || tmp->output != nullptr)) {
-					mached.emplace_back(i - patterns[tmp->index].size(), tmp->index);
+					matched.emplace_back(i - patterns[tmp->index].size(), tmp->index);
 					tmp = tmp->output;
 				}
 			}
 		}
 
-		return mached;
+		return matched;
 	}
 }

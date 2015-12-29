@@ -1,4 +1,5 @@
 #pragma once
+
 #include <queue>
 #include <vector>
 #include <limits>
@@ -20,7 +21,7 @@ namespace prim {
 	std::vector<PAIR> dist;
 
 
-	std::vector<std::vector<PAIR> >& prim() {
+	std::vector<std::vector<PAIR>> &prim() {
 		const size_t &n = G.size();
 		size_t cnt = n - 1;
 
