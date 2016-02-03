@@ -10,13 +10,13 @@ namespace KMP {
 	std::vector<size_t> failure;
 	std::vector<size_t> matched;
 
-	size_t genFailure(const std::string &pattern, size_t index) {
+	size_t genFailureOnline(const std::string &pattern, size_t index) {
 		if (index == 0) return 0;
 		size_t &p = failure[index - 1];
 		if (p != INF) return p;
 
 		// p = f(i - 1)
-		p = genFailure(pattern, index - 1);
+		p = genFailureOnline(pattern, index - 1);
 
 		while (pattern[p] != pattern[index - 1]) {
 			// 더이상 매칭 불가능
@@ -25,13 +25,13 @@ namespace KMP {
 			}
 
 			// p = f(f(...f(i - 1)...))
-			p = genFailure(pattern, p);
+			p = genFailureOnline(pattern, p);
 		}
 
 		return p += 1;
 	}
 
-	void initFailure(const std::string &pattern) {
+	void initFailureOnline(const std::string &pattern) {
 		const size_t &len = pattern.size();
 
 		failure.resize(len);
@@ -39,7 +39,26 @@ namespace KMP {
 
 		failure[0] = 0;
 
-		genFailure(pattern, len);
+		genFailureOnline(pattern, len);
+	}
+
+	void initFailure(const std::string &pattern) {
+		const size_t &len = pattern.size();
+
+		failure.resize(len);
+		fill(failure.begin(), failure.end(), 0);
+
+		size_t index = 0;
+		for (size_t i = 1; i < len; i++) {
+			if (pattern[i] == pattern[index]) {
+				failure[i] = ++index;
+			}
+			else if (index != 0) {
+				index = failure[index - 1];
+
+				i--;
+			}
+		}
 	}
 
 	size_t KMP(const std::string &target, const std::string &pattern) {
