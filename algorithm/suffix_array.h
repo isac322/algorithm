@@ -3,7 +3,6 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include <iostream>
 
 namespace SuffixArray {
 	const size_t MAX = 256;
