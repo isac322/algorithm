@@ -1,13 +1,17 @@
+/*
+idea : http://blog.myungwoo.kr/57
+*/
+
 #pragma once
 
 #include <vector>
 #include <string>
 #include <algorithm>
 
-namespace SuffixArray {
+namespace SuffixArray_LCP {
 	const size_t MAX = 256;
 	size_t n, size;
-	std::vector<size_t> result, group, cnt, tmp;
+	std::vector<size_t> result, group, cnt, tmp, lcp;
 
 	inline void countingSort(const std::vector<size_t> &highRadix, const size_t t) {
 		size_t len = 1;
@@ -57,5 +61,30 @@ namespace SuffixArray {
 		for (size_t t = 1; t < n; t *= 2) radixSort(result, t);
 
 		return result;
+	}
+
+	std::vector<size_t> &LCP(const std::string S, const std::vector<size_t> &SA) {
+		const size_t n = SA.size();
+		lcp.resize(n);
+		auto &rank = tmp;
+
+		for (size_t i = 0; i < n; i++) rank[SA[i]] = i;
+
+		size_t k = 0;
+		for (size_t i = 0; i < n; i++) {
+			if (rank[i] == 0) k = 0;
+			else {
+				size_t j = SA[rank[i] - 1];
+				while (i + k < n && j + k < n && S[i + k] == S[j + k]) k++;
+				lcp[rank[i]] = k;
+				if (k > 0) k--;
+			}
+		}
+
+		return lcp;
+	}
+
+	std::vector<size_t> &LCP(const std::string S) {
+		return LCP(S, suffixArray(S));
 	}
 }
