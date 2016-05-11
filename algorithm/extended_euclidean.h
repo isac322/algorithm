@@ -1,46 +1,47 @@
 #pragma once
+
 #include <algorithm>
 
 /*
-È®Àå À¯Å¬¸®µå ¾Ë°í¸®Áò
-m*a + n*b = gcd(a, b)¸¦ ¸¸Á·ÇÏ´Â m, nÀ» ±¸ÇÔ
+í™•ìž¥ ìœ í´ë¦¬ë“œ ì•Œê³ ë¦¬ì¦˜
+m*a + n*b = gcd(a, b)ë¥¼ ë§Œì¡±í•˜ëŠ” m, nì„ êµ¬í•¨
 
-[ri : ³ª¸ÓÁö, qi : ¸ò]
+[ri : ë‚˜ë¨¸ì§€, qi : ëª«]
 r1 = a - b*q1
 r2 = b - r1*q2
 r3 = r1 - r2*q3
 r4 = r2 - r3*q4
 ....
 rK = gcd(a, b) = r(K - 2) - r(K - 1)*qK
-ÀÇ À¯Å¬¸®µå È£Á¦¹ý½Ä Áß
-gcd(a, b)ÀÇ r(K - 2)¿Í r(K - 1)°¡ r1, r2·Î Ç®¾îÁú ¼ö ÀÖÀ½À» ÀÌ¿ëÇØ¼­
-½ÄÀ» Ç¬ ÈÄ, a, bÀÇ °è¼ö, Áï m, nÀ» Ã£´Â´Ù.
+ì˜ ìœ í´ë¦¬ë“œ í˜¸ì œë²•ì‹ ì¤‘
+gcd(a, b)ì˜ r(K - 2)ì™€ r(K - 1)ê°€ r1, r2ë¡œ í’€ì–´ì§ˆ ìˆ˜ ìžˆìŒì„ ì´ìš©í•´ì„œ
+ì‹ì„ í‘¼ í›„, a, bì˜ ê³„ìˆ˜, ì¦‰ m, nì„ ì°¾ëŠ”ë‹¤.
 */
 namespace ExtendedEuclid {
 	int m, n;
 
 	/*
-	¹ÝÈ¯°ªÀº gcd(a, b)
-	m, n¿¡ °ªÀÌ ÀúÀåµÊ
+	ë°˜í™˜ê°’ì€ gcd(a, b)
+	m, nì— ê°’ì´ ì €ìž¥ë¨
 	*/
 	int extended_euclid(int a, int b) {
 		if (a < b) std::swap(a, b);
 
-		int ppR = a%b;
+		int ppR = a % b;
 		if (!ppR) {
 			m = -1;
 			n = a / b + 1;
 			return b;
 		}
-		int pR = b%ppR;
+		int pR = b % ppR;
 		int ppM = 1, ppN = -a / b;
-		int pM = -ppM*(b / ppR), pN = 1 - ppN*(b / ppR);
+		int pM = -ppM * (b / ppR), pN = 1 - ppN * (b / ppR);
 
 		while (pR) {
 			const auto &v = std::div(ppR, pR);
-			ppM -= pM*v.quot;
+			ppM -= pM * v.quot;
 			std::swap(pM, ppM);
-			ppN -= pN*v.quot;
+			ppN -= pN * v.quot;
 			std::swap(pN, ppN);
 			ppR = v.rem;
 			std::swap(pR, ppR);
