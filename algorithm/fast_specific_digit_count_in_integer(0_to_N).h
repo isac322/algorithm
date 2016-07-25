@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-0ºÎÅÍ n±îÁö ¼ýÀÚ¸¦ ³ª¿­ÇßÀ»¶§ ÃÑ µîÀåÇÏ´Â t(0~9)ÀÇ °³¼ö¸¦ ¹ÝÈ¯.
+0ë¶€í„° nê¹Œì§€ ìˆ«ìžë¥¼ ë‚˜ì—´í–ˆì„ë•Œ ì´ ë“±ìž¥í•˜ëŠ” t(0~9)ì˜ ê°œìˆ˜ë¥¼ ë°˜í™˜.
 https://www.acmicpc.net/problem/11170
 */
 int solve(int n, int t) {
