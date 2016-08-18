@@ -20,7 +20,7 @@ namespace BipartiteTester {
 		visit[index] = true;
 
 		color[index] = isRed;
-		for (auto v : map->operator[](index)) {
+		for (auto v : map->at(index)) {
 			if (!dfs(v, !isRed)) return false;
 			if (color[v] == color[index]) return false;
 		}
