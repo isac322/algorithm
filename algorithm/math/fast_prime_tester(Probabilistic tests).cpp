@@ -2,7 +2,7 @@
 copy & pasted
 */
 
-#include <bits/stdc++.h>
+#include <random>
 using namespace std;
 
 long long modprod(long long A, long long B, long long MOD) {
