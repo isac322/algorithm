@@ -1,1 +1,3 @@
-#Wrote in C++14
+# Algorithm implementation
+
+## *Written in C++14*
