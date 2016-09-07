@@ -9,38 +9,38 @@
 namespace SCC {
 	using namespace std;
 
-	// ±×·¡ÇÁÀÇ ÀÎÁ¢ ¸®½ºÆ® Ç¥Çö
+	// ê·¸ë˜í”„ì˜ ì¸ì ‘ ë¦¬ìŠ¤íŠ¸ í‘œí˜„
 	vector<vector<int> > adj;
 
-	// °¢ Á¤Á¡ÀÇ ÄÄÆ÷³ÍÆ® ¹øÈ£. ÄÄÆ÷³ÍÆ® ¹øÈ£´Â 0 ºÎÅÍ ½ÃÀÛÇÏ¸ç, 
-	// °°Àº °­°áÇÕ ÄÄÆ÷³ÍÆ®¿¡ ¼ÓÇÑ Á¤Á¡µéÀÇ ÄÄÆ÷³ÍÆ® ¹øÈ£°¡ °°´Ù.
+	// ê° ì •ì ì˜ ì»´í¬ë„ŒíŠ¸ ë²ˆí˜¸. ì»´í¬ë„ŒíŠ¸ ë²ˆí˜¸ëŠ” 0 ë¶€í„° ì‹œì‘í•˜ë©°, 
+	// ê°™ì€ ê°•ê²°í•© ì»´í¬ë„ŒíŠ¸ì— ì†í•œ ì •ì ë“¤ì˜ ì»´í¬ë„ŒíŠ¸ ë²ˆí˜¸ê°€ ê°™ë‹¤.
 	vector<int> sccId;
 
-	// °¢ Á¤Á¡ÀÇ ¹ß°ß ¼ø¼­¿Í scc() Á¾·á ¿©ºÎ
+	// ê° ì •ì ì˜ ë°œê²¬ ìˆœì„œì™€ scc() ì¢…ë£Œ ì—¬ë¶€
 	vector<int> discovered, finished;
 
-	// Á¤Á¡ÀÇ ¹øÈ£¸¦ ´ã´Â ½ºÅÃ
+	// ì •ì ì˜ ë²ˆí˜¸ë¥¼ ë‹´ëŠ” ìŠ¤íƒ
 	stack<int> st;
 
 	int sccCounter, vertexCounter;
 
-	// here ¸¦ ·çÆ®·Î ÇÏ´Â ¼­ºêÆ®¸®¿¡¼­ ¿ª¹æÇâ °£¼±À¸·Î ´êÀ» ¼ö ÀÖ´Â ÃÖ¼ÒÀÇ ¹ß°ß ¼ø¼­¸¦
-	// ¹İÈ¯ÇÑ´Ù.
+	// here ë¥¼ ë£¨íŠ¸ë¡œ í•˜ëŠ” ì„œë¸ŒíŠ¸ë¦¬ì—ì„œ ì—­ë°©í–¥ ê°„ì„ ìœ¼ë¡œ ë‹¿ì„ ìˆ˜ ìˆëŠ” ìµœì†Œì˜ ë°œê²¬ ìˆœì„œë¥¼
+	// ë°˜í™˜í•œë‹¤.
 	int scc(int here) {
 		int ret = discovered[here] = vertexCounter++;
-		// ½ºÅÃ¿¡ here ¸¦ ³Ö´Â´Ù. here ÀÇ ÈÄ¼ÕµéÀº ¸ğµÎ ½ºÅÃ¿¡¼­ here ÈÄ¿¡ µé¾î°£´Ù.
+		// ìŠ¤íƒì— here ë¥¼ ë„£ëŠ”ë‹¤. here ì˜ í›„ì†ë“¤ì€ ëª¨ë‘ ìŠ¤íƒì—ì„œ here í›„ì— ë“¤ì–´ê°„ë‹¤.
 		st.push(here);
 		for (int there : adj[here]) {
-			// (here,there) °¡ Æ®¸® °£¼±
+			// (here,there) ê°€ íŠ¸ë¦¬ ê°„ì„ 
 			if (discovered[there] == -1)
 				ret = min(ret, scc(there));
-			// (here,there) °¡ ¿ª¹æÇâÀÌ³ª ±³Â÷ °£¼±
+			// (here,there) ê°€ ì—­ë°©í–¥ì´ë‚˜ êµì°¨ ê°„ì„ 
 			else if (discovered[there] < discovered[here] && sccId[there] == -1)
 				ret = min(ret, discovered[there]);
 		}
-		// here °¡ °­°áÇÕ ÄÄÆ÷³ÍÆ®ÀÇ ·çÆ®ÀÎ°¡ È®ÀÎÇÑ´Ù
+		// here ê°€ ê°•ê²°í•© ì»´í¬ë„ŒíŠ¸ì˜ ë£¨íŠ¸ì¸ê°€ í™•ì¸í•œë‹¤
 		if (ret == discovered[here]) {
-			// here ¸¦ ·çÆ®·Î ÇÏ´Â ¼­ºêÆ®¸®¿¡ ³²¾Æ ÀÖ´Â Á¤Á¡µéÀ» ÀüºÎ ÇÏ³ªÀÇ ÄÄÆ÷³ÍÆ®·Î ¹­´Â´Ù
+			// here ë¥¼ ë£¨íŠ¸ë¡œ í•˜ëŠ” ì„œë¸ŒíŠ¸ë¦¬ì— ë‚¨ì•„ ìˆëŠ” ì •ì ë“¤ì„ ì „ë¶€ í•˜ë‚˜ì˜ ì»´í¬ë„ŒíŠ¸ë¡œ ë¬¶ëŠ”ë‹¤
 			while (true) {
 				int t = st.top();
 				st.pop();
@@ -53,9 +53,9 @@ namespace SCC {
 		return ret;
 	}
 
-	// tarjan ÀÇ SCC ¾Ë°í¸®Áò
+	// tarjan ì˜ SCC ì•Œê³ ë¦¬ì¦˜
 	vector<int>& tarjanSCC() {
-		// ¹è¿­µéÀ» ÀüºÎ ÃÊ±âÈ­
+		// ë°°ì—´ë“¤ì„ ì „ë¶€ ì´ˆê¸°í™”
 		sccId.resize(adj.size());
 		fill(sccId.begin(), sccId.end(), -1);
 		discovered.resize(adj.size());
@@ -64,9 +64,9 @@ namespace SCC {
 		finished.resize(adj.size());
 		fill(finished.begin(), finished.end(), 0);
 
-		// Ä«¿îÅÍ ÃÊ±âÈ­
+		// ì¹´ìš´í„° ì´ˆê¸°í™”
 		sccCounter = vertexCounter = 0;
-		// ¸ğµç Á¤Á¡¿¡ ´ëÇØ scc() È£Ãâ
+		// ëª¨ë“  ì •ì ì— ëŒ€í•´ scc() í˜¸ì¶œ
 		for (int i = 0; i < adj.size(); i++) if (discovered[i] == -1) scc(i);
 		return sccId;
 	}
