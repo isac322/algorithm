@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <queue>
 #include <limits>
 #include <vector>
@@ -17,6 +17,8 @@ namespace FordFulkerson {
 
 	/*
 	* https://en.wikipedia.org/wiki/Ford%E2%80%93Fulkerson_algorithm
+	* Also known as Edmonds–Karp algorithm, since this implementation uses BFS.
+	* https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm
 	* 
 	* This method does not use reference(declaring with &) on `graph` parameter. because it modifies original graph.
 	* If you're implementation allows modification of original graph, declare graph parameter as reference type.

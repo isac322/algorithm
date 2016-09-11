@@ -2,7 +2,10 @@
 #include <vector>
 #include <algorithm>
 
-int MaximumSubarraySum(std::vector<int> arr) {
+/*
+* https://en.wikipedia.org/wiki/Maximum_subarray_problem
+*/
+long long MaximumSubarraySum(std::vector<int> arr) {
 	long long maxSum, here;
 	maxSum = here = arr[0];
 	for (auto i = arr.begin() + 1; i != arr.end(); i++) {
