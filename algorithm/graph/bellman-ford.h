@@ -2,39 +2,55 @@
 
 #include <vector>
 #include <limits>
+#include <cstddef>
 #include <algorithm>
 
+/*
+* find shortest path on graph even if it contains negative weighted edge.
+*
+* https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm#Algorithm
+*
+* Showing visually on web:
+* http://visualgo.net/sssp
+*/
 namespace BellmanFord {
-	typedef std::pair<int, int> PAIR;
+	using namespace std;
 
-	const int &INF = std::numeric_limits<int>::max();
+	typedef pair<int, int> PAIR;
 
-	/*
-	Graph
-	pair.first : weight
-	pair.second : destination node
-	*/
-	std::vector<std::vector<PAIR> > G;
+	const int &INF = numeric_limits<int>::max();
 
 	/*
-	shortest distance from start node
+	* Graph (Adjacency list)
+	* pair.first : weight
+	* pair.second : destination node
 	*/
-	std::vector<int> dist;
+	vector<vector<PAIR>> G;
 
-	std::vector<int> &bellman_ford(int start) {
+	/*
+	* shortest distance from start node.
+	*/
+	vector<int> dist;
+
+	/*
+	* @param	start	start node number (starting from 0)
+	* @return	shortest distance vector that starting from `start` node
+	*/
+	vector<int>& bellman_ford(int start) {
 		const size_t &n = G.size();
 
-		dist.resize(n, INF);
+		dist.resize(n);
+		fill(dist.begin(), dist.end(), INF);
 		dist[start] = 0;
 
 		for (size_t i = 0; i < n - 1; i++) {
 			for (size_t here = 0; here < n; here++) {
 				if (dist[here] != INF) {
 					for (auto &j : G[here]) {
-						const int &there = j.second;
-						const int &weight = j.first;
+						int there = j.second;
+						int weight = j.first;
 
-						dist[there] = std::min(dist[there], dist[here] + weight);
+						dist[there] = min(dist[there], dist[here] + weight);
 					}
 				}
 			}
@@ -47,6 +63,14 @@ namespace BellmanFord {
 		return bellman_ford(start)[end];
 	}
 
+	/*
+	* find negative cycle by conducting one more phase on `bellman_ford()`.
+	* https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm#Finding_negative_cycles
+	*
+	* must call after "bellman_ford(start)" for all weakly component on graph `G`.
+	*
+	* @return	true there is negative cycle.
+	*/
 	bool hasNegativCycle() {
 		const size_t &n = G.size();
 
