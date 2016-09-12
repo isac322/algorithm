@@ -23,10 +23,11 @@ namespace FordFulkerson {
 	* This method does not use reference(declaring with &) on `flow` parameter. because it modifies original graph.
 	* If you're implementation allows modification of original flow, declare graph parameter as reference type.
 	*
-	* @param graph storing connected nodes (Adjacency list)
-	* @param flow flow amount of graph (Adjacency matrix)
-	* @param source source of network flow graph
-	* @param sink sink of networt flow graph
+	* @param	graph	storing connected nodes (Adjacency list)
+	* @param	flow	flow amount of graph (Adjacency matrix)
+	* @param	source	source of network flow graph
+	* @param	sink	sink of networt flow graph
+	* @return	maximum flow of this graph
 	*/
 	size_t fordFulkerson(const vector<vector<size_t>> &graph, vector<vector<size_t>> flow, size_t source, size_t sink) {
 		const size_t &V = graph.size();
