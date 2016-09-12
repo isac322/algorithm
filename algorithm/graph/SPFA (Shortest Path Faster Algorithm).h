@@ -33,7 +33,7 @@ namespace SPFA {
 	* @param	graph	(weight, next node number) paired graph (Adjacency list)
 	* @param	start	start node number
 	*/
-	vector<int>& spfa(const vector<vector<pair<int, int>>> &graph, size_t start) {
+	vector<int>& spfa(const vector<vector<pair<int, size_t>>> &graph, size_t start) {
 		n = graph.size();
 
 		// initialize
@@ -80,7 +80,7 @@ namespace SPFA {
 		return dist;
 	}
 
-	int spfa(const vector<vector<pair<int, int>>> &graph, size_t start, size_t end) {
+	int spfa(const vector<vector<pair<int, size_t>>> &graph, size_t start, size_t end) {
 		return spfa(graph, start)[end];
 	}
 
