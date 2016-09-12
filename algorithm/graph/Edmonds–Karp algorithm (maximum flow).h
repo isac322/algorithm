@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <algorithm>
 
-namespace FordFulkerson {
+namespace EdmondsKarp {
 	using namespace std;
 
 	const size_t &INF = numeric_limits<size_t>::max();
@@ -29,7 +29,7 @@ namespace FordFulkerson {
 	* @param	sink	sink of networt flow graph
 	* @return	maximum flow of this graph
 	*/
-	size_t fordFulkerson(const vector<vector<size_t>> &graph, vector<vector<size_t>> flow, size_t source, size_t sink) {
+	size_t edmondsKarp(const vector<vector<size_t>> &graph, vector<vector<size_t>> flow, size_t source, size_t sink) {
 		const size_t &V = graph.size();
 		traceLink.resize(V);
 
