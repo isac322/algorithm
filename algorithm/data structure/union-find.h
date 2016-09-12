@@ -1,21 +1,39 @@
 #pragma once
-#include <cstddef>
+
 #include <vector>
+#include <cstddef>
 
+using namespace std;
+
+/**
+ * Disjoint-set
+ *
+ * https://en.wikipedia.org/wiki/Disjoint-set_data_structure
+ */
 struct UnionFind {
-	std::vector<std::size_t> parent, depth, size;
-
-	UnionFind(std::size_t len) :parent(len), depth(len, 1), size(len, 1) {
-		for (std::size_t i = 0; i < len; i++) parent[i] = i;
+	vector<size_t> parent, depth, size;
+	
+	/**
+	 * @param	len	set size
+	 */
+	UnionFind(size_t len) : parent(len), depth(len, 1), size(len, 1) {
+		for (size_t i = 0; i < len; i++) parent[i] = i;
 	}
-
-	std::size_t find(std::size_t n) {
-		std::size_t &p = parent[n];
+	
+	/**
+	 * find top parent of given n.
+	 * and compress set by removing intermediate path.
+	 *
+	 * @param	n	node number
+	 * @return	top parent of node n
+	 */
+	size_t find(size_t n) {
+		size_t &p = parent[n];
 		if (p == n) return n;
 		else return p = find(p);
 	}
-
-	std::size_t uni(std::size_t p, std::size_t q) {
+	
+	size_t merge(size_t p, size_t q) {
 		p = find(p);
 		q = find(q);
 		if (p == q) return size[p];

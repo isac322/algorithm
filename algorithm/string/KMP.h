@@ -3,14 +3,17 @@
 #include <string>
 #include <vector>
 #include <limits>
+#include <cstddef>
 
 namespace KMP {
-	const size_t &INF = std::numeric_limits<size_t>::max();
+	using namespace std;
+	
+	const size_t &INF = numeric_limits<size_t>::max();
 
-	std::vector<size_t> failure;
-	std::vector<size_t> matched;
+	vector<size_t> failure;
+	vector<size_t> matched;
 
-	size_t genFailureOnline(const std::string &pattern, size_t index) {
+	size_t genFailureOnline(const string &pattern, size_t index) {
 		if (index == 0) return 0;
 		size_t &p = failure[index - 1];
 		if (p != INF) return p;
@@ -31,7 +34,7 @@ namespace KMP {
 		return p += 1;
 	}
 
-	void initFailureOnline(const std::string &pattern) {
+	void initFailureOnline(const string &pattern) {
 		const size_t &len = pattern.size();
 
 		failure.resize(len);
@@ -42,7 +45,7 @@ namespace KMP {
 		genFailureOnline(pattern, len);
 	}
 
-	void initFailure(const std::string &pattern) {
+	void initFailure(const string &pattern) {
 		const size_t &len = pattern.size();
 
 		failure.resize(len);
@@ -61,7 +64,7 @@ namespace KMP {
 		}
 	}
 
-	size_t KMP(const std::string &target, const std::string &pattern) {
+	size_t KMP(const string &target, const string &pattern) {
 		initFailure(pattern);
 
 		const size_t &len = target.size(), &last = pattern.size();
@@ -83,7 +86,7 @@ namespace KMP {
 		return len;
 	}
 
-	std::vector<size_t> &KMP_all(const std::string &target, const std::string &pattern) {
+	vector<size_t> &KMP_all(const string &target, const string &pattern) {
 		initFailure(pattern);
 		matched.clear();
 

@@ -4,6 +4,8 @@
 #include <algorithm>
 
 namespace ConvexHull {
+	using namespace std;
+	
 	const double &PI = 3.14159265358979323846;
 
 	struct Point {
@@ -22,7 +24,7 @@ namespace ConvexHull {
 		Point(const Point &val) : x(val.x), y(val.y), angle(val.angle) { }
 	};
 
-	std::vector<Point> points;
+	vector<Point> points;
 
 
 	inline void gen_angle(const Point &base) {
@@ -37,9 +39,9 @@ namespace ConvexHull {
 		return x2 * c.y - x3 * b.y - (x1 * c.y - x3 * a.y) + x1 * b.y - x2 * a.y;
 	}
 
-	std::vector<Point *> hull;
+	vector<Point *> hull;
 
-	std::vector<Point *> &convex_hull() {
+	vector<Point *> &convex_hull() {
 		Point mostLeft = points[0];
 
 		for (auto &d : points) {
@@ -49,7 +51,7 @@ namespace ConvexHull {
 		}
 
 		gen_angle(mostLeft);
-		std::sort(points.begin(), points.end());
+		sort(points.begin(), points.end());
 
 
 		hull.clear();

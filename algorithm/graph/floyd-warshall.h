@@ -2,44 +2,49 @@
 
 #include <vector>
 #include <limits>
+#include <cstddef>
 #include <algorithm>
 
 namespace FloydWarshall {
-	const int &INF = std::numeric_limits<int>::max();
-
+	using namespace std;
+	
+	const int &INF = numeric_limits<int>::max();
+	
 	/*
 	Graph
 	G[i][j] : (i)->(j) edge weight
 	if not exist INF
 	*/
-	std::vector<std::vector<int> > G;
-
+	vector<vector<int>> G;
+	
 	/*
 	shortest distance
 	dist[i][j] : (i) node to (j) node
 	*/
-	std::vector<std::vector<int> > dist;
-
+	vector<vector<int>> dist;
+	
 	void init(int n) {
-		G.resize(n, std::vector<int>(n, INF));
+		G.resize(n, vector<int>(n, INF));
 		for (size_t i = 0; i < n; i++) G[i][i] = 0;
 	}
-
-	std::vector<std::vector<int> > &floyd_warshall() {
+	
+	vector<vector<int>> &floydWarshall() {
 		const size_t &n = G.size();
-
+		
 		dist = G;
-
+		
 		for (size_t k = 0; k < n; k++) {
 			for (size_t i = 0; i < n; i++) {
-				for (size_t j = 0; j < n; j++) {
-					if (dist[i][k] != INF && dist[k][j] != INF) {
-						dist[i][j] = std::min(dist[i][j], dist[i][k] + dist[k][j]);
+				if (dist[i][k] != INF) {
+					for (size_t j = 0; j < n; j++) {
+						if (dist[k][j] != INF) {
+							dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+						}
 					}
 				}
 			}
 		}
-
+		
 		return dist;
 	}
 }

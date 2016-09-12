@@ -6,12 +6,12 @@
 #include <algorithm>
 #include <functional>
 
-/*
-* find shortest path on graph even if it contains negative weighted edge.
-*
-* If graph contains negative weighted edge, SPFA is faster than bellman-ford in average case.
-* https://en.wikipedia.org/wiki/Shortest_Path_Faster_Algorithm
-*/
+/**
+ * find shortest path on graph even if it contains negative weighted edge.
+ *
+ * If graph contains negative weighted edge, SPFA is faster than bellman-ford in average case.
+ * https://en.wikipedia.org/wiki/Shortest_Path_Faster_Algorithm
+ */
 namespace SPFA {
 	using namespace std;
 
@@ -29,11 +29,11 @@ namespace SPFA {
 	// node number
 	size_t n;
 
-	/*
-	* @param	graph	(weight, next node number) paired graph (Adjacency list)
-	* @param	start	start node number
-	* @return	distance vector that starts from start. if graph contains negative cycle, returns empty vector.
-	*/
+	/**
+	 * @param	graph	(weight, next node number) paired graph (Adjacency list)
+	 * @param	start	start node number
+	 * @return	distance vector that starts from start. if graph contains negative cycle, returns empty vector.
+	 */
 	vector<int>& spfa(const vector<vector<pair<int, size_t>>> &graph, size_t start) {
 		n = graph.size();
 
@@ -88,14 +88,14 @@ namespace SPFA {
 		return spfa(graph, start)[end];
 	}
 
-	/*
-	* find negative cycle by conducting one more phase on `bellman_ford()`.
-	* http://stackoverflow.com/a/26771298/6821103
-	*
-	* must call after "bellman_ford(start)" for all weakly component on graph `graph`.
-	*
-	* @return	true there is negative cycle.
-	*/
+	/**
+	 * find negative cycle by conducting one more phase on `bellman_ford()`.
+	 * http://stackoverflow.com/a/26771298/6821103
+	 *
+	 * must call after "bellman_ford(start)" for all weakly component on graph `graph`.
+	 *
+	 * @return	true there is negative cycle.
+	 */
 	bool hasNegativCycle() {
 		for (auto v : visits) if (v == n) return true;
 		return false;

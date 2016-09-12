@@ -5,14 +5,14 @@
 #include <cstddef>
 #include <algorithm>
 
-/*
-* find shortest path on graph even if it contains negative weighted edge.
-*
-* https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm#Algorithm
-*
-* Showing visually on web:
-* http://visualgo.net/sssp
-*/
+/**
+ * find shortest path on graph even if it contains negative weighted edge.
+ *
+ * https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm#Algorithm
+ *
+ * Showing visually on web:
+ * http://visualgo.net/sssp
+ */
 namespace BellmanFord {
 	using namespace std;
 
@@ -20,22 +20,22 @@ namespace BellmanFord {
 
 	const int &INF = numeric_limits<int>::max();
 
-	/*
-	* Graph (Adjacency list)
-	* pair.first : weight
-	* pair.second : destination node
-	*/
+	/**
+	 * Graph (Adjacency list)
+	 * pair.first : weight
+	 * pair.second : destination node
+	 */
 	vector<vector<PAIR>> G;
 
-	/*
-	* shortest distance from start node.
-	*/
+	/**
+	 * shortest distance from start node.
+	 */
 	vector<int> dist;
 
-	/*
-	* @param	start	start node number (starting from 0)
-	* @return	shortest distance vector that starting from `start` node
-	*/
+	/**
+	 * @param	start	start node number (starting from 0)
+	 * @return	shortest distance vector that starting from `start` node
+	 */
 	vector<int>& bellman_ford(int start) {
 		const size_t &n = G.size();
 
@@ -63,14 +63,14 @@ namespace BellmanFord {
 		return bellman_ford(start)[end];
 	}
 
-	/*
-	* find negative cycle by conducting one more phase on `bellman_ford()`.
-	* https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm#Finding_negative_cycles
-	*
-	* must call after "bellman_ford(start)" for all weakly component on graph `G`.
-	*
-	* @return	true there is negative cycle.
-	*/
+	/**
+	 * find negative cycle by conducting one more phase on `bellman_ford()`.
+	 * https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm#Finding_negative_cycles
+	 *
+	 * must call after "bellman_ford(start)" for all weakly component on graph `G`.
+	 *
+	 * @return	true there is negative cycle.
+	 */
 	bool hasNegativCycle() {
 		const size_t &n = G.size();
 
