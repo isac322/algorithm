@@ -23,8 +23,8 @@ namespace FordFulkerson {
 	* This method does not use reference(declaring with &) on `flow` parameter. because it modifies original graph.
 	* If you're implementation allows modification of original flow, declare graph parameter as reference type.
 	*
-	* @param graph Adjacency list (storing connected nodes)
-	* @param flow flow amount of graph
+	* @param graph storing connected nodes (Adjacency list)
+	* @param flow flow amount of graph (Adjacency matrix)
 	* @param source source of network flow graph
 	* @param sink sink of networt flow graph
 	*/
