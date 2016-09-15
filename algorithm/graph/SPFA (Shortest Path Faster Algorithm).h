@@ -32,7 +32,7 @@ namespace SPFA {
 	/**
 	 * @param	graph	(weight, next node number) paired graph (Adjacency list)
 	 * @param	start	start node number
-	 * @return	distance vector that starts from start. if graph contains negative cycle, returns empty vector.
+	 * @return	distance vector that starts from `start`. if graph contains negative cycle, returns empty vector.
 	 */
 	vector<int>& spfa(const vector<vector<pair<int, size_t>>> &graph, size_t start) {
 		n = graph.size();
@@ -57,9 +57,9 @@ namespace SPFA {
 
 			visits[here]++;
 			/*
-			* Incapacitate negative cycle
-			* http://stackoverflow.com/a/26771298/6821103
-			*/
+			 * Incapacitate negative cycle
+			 * http://stackoverflow.com/a/26771298/6821103
+			 */
 			if (visits[here] == n) {
 				dist.clear();
 				return dist;
@@ -98,6 +98,6 @@ namespace SPFA {
 	 */
 	bool hasNegativCycle() {
 		for (auto v : visits) if (v == n) return true;
-		return false;
+		return visits.empty();
 	}
 }

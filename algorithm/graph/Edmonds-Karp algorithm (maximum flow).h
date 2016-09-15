@@ -13,17 +13,28 @@
  */
 namespace EdmondsKarp {
 	using namespace std;
-	
+
 	const size_t &INF = numeric_limits<size_t>::max();
-	
+
+	// Storing node numbers for use in BFS.
+	deque<size_t> que;
+
 	/**
 	* Store backward link for restoring path from source to sink, which is used in a single Ford-Fulkerson iteration.
 	*/
 	vector<size_t> traceLink;
-	
+
 	/**
 	 * This method does not use reference(declaring with &) on `flow` parameter. because it modifies original graph.
 	 * If you're implementation allows modification of original flow, declare graph parameter as reference type.
+	 *
+	 *
+	 * *** MAKE SURE THAT REVERSE EDGES ARE IN `graph`, EVEN IF DO NOT HAVE FLOW AMOUNT. !!! ***
+	 * *** EXAMPLE (edge on node 0 -> node 3 with capacity 3)
+	 * *** graph[0].push_back(3);
+	 * *** graph[3].push_back(0);
+	 * *** flow[0][3] = 3;
+	 *
 	 *
 	 * @param	graph	storing connected nodes (Adjacency list)
 	 * @param	flow	flow amount of graph (Adjacency matrix)
@@ -34,28 +45,25 @@ namespace EdmondsKarp {
 	size_t edmondsKarp(const vector<vector<size_t>> &graph, vector<vector<size_t>> flow, size_t source, size_t sink) {
 		const size_t &V = graph.size();
 		traceLink.resize(V);
-		
+
 		// return value.
 		size_t totalFlow = 0;
-		
-		// Storing node numbers for use in BFS.
-		deque<size_t> que;
-		
+
 		/*
 		* Iterate until there's no more path from source to sink.
 		*/
 		while (true) {
 			que.clear();
 			fill(traceLink.begin(), traceLink.end(), V);
-			
+
 			// BFS start with source.
 			que.emplace_back(source);
-			
+
 			while (!que.empty()) {
 				size_t here = que.front();
 				if (here == sink) break;
 				que.pop_front();
-				
+
 				for (size_t there : graph[here]) {
 					// if here->there edge can flow.
 					if (flow[here][there] > 0 && traceLink[there] == V) {
@@ -64,26 +72,26 @@ namespace EdmondsKarp {
 					}
 				}
 			}
-			
+
 			// true if no more path.
 			if (traceLink[sink] == V) break;
-			
+
 			size_t amount = INF;
 			// Find lowest flow amount within backward path that starting from sink.
 			for (size_t u = sink; u != source; u = traceLink[u]) {
 				size_t &v = traceLink[u];
 				amount = min(amount, flow[v][u]);
 			}
-			
+
 			for (size_t u = sink; u != source; u = traceLink[u]) {
 				size_t &v = traceLink[u];
 				flow[v][u] -= amount;
 				flow[u][v] += amount;
 			}
-			
+
 			totalFlow += amount;
 		}
-		
+
 		return totalFlow;
 	}
 }
