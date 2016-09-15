@@ -2,6 +2,7 @@
  * JUST FOR TEST!
  */
 #include "algorithm/data structure/lazy_propagation_segment_tree.h"
+#include "algorithm/data structure/RMQ.h"
 #include "algorithm/data structure/segment_tree.h"
 #include "algorithm/data structure/union-find.h"
 #include "algorithm/etc/fast_specific_digit_count_in_integer(0_to_N).h"
@@ -246,6 +247,19 @@ void hopcroftKarpTest() {
 	cout << HopcroftKarp::maximumMatching(graph, n, n);
 }
 
+void RMQTest() {
+	size_t n, m, a, b;
+	scanf("%zu%zu", &n, &m);
+	vector<size_t> arr(n);
+	for (size_t i = 0; i < n; i++) scanf("%zu", &arr[i]);
+	RMQ<size_t> rmq(arr);
+	for (size_t i = 0; i < m; i++) {
+		scanf("%zu%zu", &a, &b);
+		a--, b--;
+		printf("%zu\n", rmq.query(a, b));
+	}
+}
+
 int main() {
-	hopcroftKarpTest();
+	RMQTest();
 }
